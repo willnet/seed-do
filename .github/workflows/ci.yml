@@ -1,0 +1,63 @@
+name: Ruby
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      postgres:
+        image: postgres:17
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_USER: postgres
+    strategy:
+      matrix:
+        include:
+          - { ruby-version: '3.2', gemfile: 'rails_7_1', database: 'sqlite3' }
+          - { ruby-version: '3.2', gemfile: 'rails_7_1', database: 'mysql2' }
+          - { ruby-version: '3.2', gemfile: 'rails_7_1', database: 'postgresql' }
+          - { ruby-version: '3.2', gemfile: 'rails_7_2', database: 'sqlite3' }
+          - { ruby-version: '3.2', gemfile: 'rails_7_2', database: 'mysql2' }
+          - { ruby-version: '3.2', gemfile: 'rails_7_2', database: 'postgresql' }
+          - { ruby-version: '3.3', gemfile: 'rails_7_2', database: 'sqlite3' }
+          - { ruby-version: '3.3', gemfile: 'rails_7_2', database: 'mysql2' }
+          - { ruby-version: '3.3', gemfile: 'rails_7_2', database: 'postgresql' }
+          - { ruby-version: '3.4', gemfile: 'rails_7_2', database: 'sqlite3' }
+          - { ruby-version: '3.4', gemfile: 'rails_7_2', database: 'mysql2' }
+          - { ruby-version: '3.4', gemfile: 'rails_7_2', database: 'postgresql' }
+          - { ruby-version: '3.2', gemfile: 'rails_8_0', database: 'sqlite3' }
+          - { ruby-version: '3.2', gemfile: 'rails_8_0', database: 'mysql2' }
+          - { ruby-version: '3.2', gemfile: 'rails_8_0', database: 'postgresql' }
+          - { ruby-version: '3.3', gemfile: 'rails_8_0', database: 'sqlite3' }
+          - { ruby-version: '3.3', gemfile: 'rails_8_0', database: 'mysql2' }
+          - { ruby-version: '3.3', gemfile: 'rails_8_0', database: 'postgresql' }
+          - { ruby-version: '3.4', gemfile: 'rails_8_0', database: 'sqlite3' }
+          - { ruby-version: '3.4', gemfile: 'rails_8_0', database: 'mysql2' }
+          - { ruby-version: '3.4', gemfile: 'rails_8_0', database: 'postgresql' }
+
+    env:
+      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
+      DB: ${{ matrix.database }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Run tests
+      run: bundle exec rspec
