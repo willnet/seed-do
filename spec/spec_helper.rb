@@ -6,8 +6,9 @@ require 'logger'
 SeedFu.quiet = true
 
 ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/../debug.log")
-
+ENV['RAILS_ENV'] ||= 'test'
 ENV["DB"] ||= 'sqlite3'
+
 puts "Using #{ENV["DB"]} to run the tests."
 require File.dirname(__FILE__) + "/connections/#{ENV["DB"]}.rb"
 
