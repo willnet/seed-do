@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.email       = ["netwillnet@gmail.com"]
   s.homepage    = "http://github.com/willnet/seed-do"
   s.summary     = "Easily manage seed data in your Active Record application"
-  s.description = "Seed Fu is an attempt to once and for all solve the problem of inserting and maintaining seed data in a database. It uses a variety of techniques gathered from various places around the web and combines them to create what is hopefully the most robust seed data system around."
+  s.description = "Seed Do is an attempt to once and for all solve the problem of inserting and maintaining seed data in a database. It uses a variety of techniques gathered from various places around the web and combines them to create what is hopefully the most robust seed data system around."
   s.required_ruby_version = ">= 3.2"
 
   s.add_dependency "activerecord", ">= 7.1"
@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rspec"
 
-  s.files        = Dir.glob("{lib}/**/*") + %w(LICENSE README.md CHANGELOG.md)
+  s.files        = Dir.glob("{lib}/**/*") + %w(LICENSE README.md)
   s.require_path = 'lib'
 end
