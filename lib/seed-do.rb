@@ -31,6 +31,6 @@ module SeedDo
 end
 
 # @public
-class ActiveRecord::Base
+ActiveSupport.on_load(:active_record) do
   extend SeedDo::ActiveRecordExtension
 end
