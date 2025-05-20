@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib/', __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
@@ -9,9 +8,9 @@ Gem::Specification.new do |s|
   s.version     = SeedDo::VERSION
   s.platform    = Gem::Platform::RUBY
   s.licenses    = ['MIT']
-  s.authors     = ["Michael Bleigh", "Jon Leighton"]
-  s.email       = ["michael@intridea.com", "j@jonathanleighton.com"]
-  s.homepage    = "http://github.com/mbleigh/seed-do"
+  s.authors     = ["Shinichi Maeshima"]
+  s.email       = ["netwillnet@gmail.com"]
+  s.homepage    = "http://github.com/willnet/seed-do"
   s.summary     = "Easily manage seed data in your Active Record application"
   s.description = "Seed Fu is an attempt to once and for all solve the problem of inserting and maintaining seed data in a database. It uses a variety of techniques gathered from various places around the web and combines them to create what is hopefully the most robust seed data system around."
   s.required_ruby_version = ">= 3.2"
