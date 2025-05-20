@@ -1,9 +1,9 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'seed-fu'
+require 'seed-do'
 require 'logger'
 
-SeedFu.quiet = true
+SeedDo.quiet = true
 
 ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/../debug.log")
 ENV['RAILS_ENV'] ||= 'test'

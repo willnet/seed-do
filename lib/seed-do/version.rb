@@ -1,4 +1,4 @@
-module SeedFu
+module SeedDo
   # The current version of Seed Fu
   VERSION = '2.3.9'
 end

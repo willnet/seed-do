@@ -1,6 +1,6 @@
 require 'active_support/core_ext/hash/keys'
 
-module SeedFu
+module SeedDo
   # Creates or updates seed records with data.
   #
   # It is not recommended to use this class directly. Instead, use `Model.seed`, and `Model.seed_once`,
@@ -14,7 +14,7 @@ module SeedFu
     # @param [Array<Hash>] data Each item in this array is a hash containing attributes for a
     #   particular record.
     # @param [Hash] options
-    # @option options [Boolean] :quiet (SeedFu.quiet) If true, output will be silenced
+    # @option options [Boolean] :quiet (SeedDo.quiet) If true, output will be silenced
     # @option options [Boolean] :insert_only (false) If true then existing records which match the
     #   constraints will not be updated, even if the seed data has changed
     def initialize(model_class, constraints, data, options = {})
@@ -23,7 +23,7 @@ module SeedFu
       @data        = data.to_a || []
       @options     = options.symbolize_keys
 
-      @options[:quiet] ||= SeedFu.quiet
+      @options[:quiet] ||= SeedDo.quiet
 
       validate_constraints!
       validate_data!

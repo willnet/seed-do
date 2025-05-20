@@ -1,4 +1,4 @@
-module SeedFu
+module SeedDo
   module ActiveRecordExtension
     # Load some seed data. There are two ways to do this.
     #
@@ -29,7 +29,7 @@ module SeedFu
     #       { :x => 5, :y => 9,  :name => "Office" }
     #     )
     def seed(*args, &block)
-      SeedFu::Seeder.new(self, *parse_seed_fu_args(args, block)).seed
+      SeedDo::Seeder.new(self, *parse_seed_fu_args(args, block)).seed
     end
 
     # Has the same syntax as {#seed}, but if a record already exists with the same values for
@@ -41,7 +41,7 @@ module SeedFu
     #   Person.seed_once(:id, :id => 1, :name => "Harry") # => Name *not* changed
     def seed_once(*args, &block)
       constraints, data = parse_seed_fu_args(args, block)
-      SeedFu::Seeder.new(self, constraints, data, :insert_only => true).seed
+      SeedDo::Seeder.new(self, constraints, data, :insert_only => true).seed
     end
 
     private
@@ -58,7 +58,7 @@ module SeedFu
           end
         else
           # We have a block, so assume the args are all constraints
-          [args, [SeedFu::BlockHash.new(block).to_hash]]
+          [args, [SeedDo::BlockHash.new(block).to_hash]]
         end
       end
   end
