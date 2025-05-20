@@ -34,11 +34,11 @@ module SeedDo
 
         ActiveRecord::Base.transaction do
           open(filename) do |file|
-            chunked_ruby = ''
+            chunked_ruby = +''
             file.each_line do |line|
               if line == "# BREAK EVAL\n"
                 eval(chunked_ruby)
-                chunked_ruby = ''
+                chunked_ruby = +''
               else
                 chunked_ruby << line
               end
