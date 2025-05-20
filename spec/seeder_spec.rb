@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SeedFu::Seeder do
+describe SeedDo::Seeder do
 
   it "should work with negative seeds" do
     SeededModel.seed(:id) do |s|

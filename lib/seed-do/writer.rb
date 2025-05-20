@@ -1,10 +1,10 @@
-module SeedFu
+module SeedDo
   # {Writer} is used to programmatically generated seed files. For example, you might want to write
   # a script which converts data in a CSV file to a valid Seed Fu seed file, which can then be
   # imported.
   #
   # @example Basic usage
-  #   SeedFu::Writer.write('path/to/file.rb', :class_name => 'Person', :constraints => [:first_name, :last_name]) do |writer|
+  #   SeedDo::Writer.write('path/to/file.rb', :class_name => 'Person', :constraints => [:first_name, :last_name]) do |writer|
   #     writer.add(:first_name => 'Jon',   :last_name => 'Smith',    :age => 21)
   #     writer.add(:first_name => 'Emily', :last_name => 'McDonald', :age => 24)
   #   end
@@ -65,7 +65,7 @@ module SeedFu
     # Add a seed. Must be called within a block passed to {#write}.
     # @param [Hash] seed The attributes for the seed
     def <<(seed)
-      raise "You must add seeds inside a SeedFu::Writer#write block" unless @io
+      raise "You must add seeds inside a SeedDo::Writer#write block" unless @io
 
       buffer = ''
 

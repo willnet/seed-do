@@ -1,26 +1,26 @@
 require 'zlib'
 require 'active_support/core_ext/array/wrap'
 
-module SeedFu
+module SeedDo
   # Runs seed files.
   #
-  # It is not recommended to use this class directly. Instead, use {SeedFu.seed SeedFu.seed}, which creates
+  # It is not recommended to use this class directly. Instead, use {SeedDo.seed SeedDo.seed}, which creates
   # an instead of {Runner} and calls {#run #run}.
   #
-  # @see SeedFu.seed SeedFu.seed
+  # @see SeedDo.seed SeedDo.seed
   class Runner
     # @param [Array<String>] fixture_paths The paths where fixtures are located. Will use
-    #   `SeedFu.fixture_paths` if {nil}. If the argument is not an array, it will be wrapped by one.
+    #   `SeedDo.fixture_paths` if {nil}. If the argument is not an array, it will be wrapped by one.
     # @param [Regexp] filter If given, only seed files with a file name matching this pattern will
     #   be used
     def initialize(fixture_paths = nil, filter = nil)
-      @fixture_paths = Array.wrap(fixture_paths || SeedFu.fixture_paths)
+      @fixture_paths = Array.wrap(fixture_paths || SeedDo.fixture_paths)
       @filter        = filter
     end
 
     # Run the seed files.
     def run
-      puts "\n== Filtering seed files against regexp: #{@filter.inspect}" if @filter && !SeedFu.quiet
+      puts "\n== Filtering seed files against regexp: #{@filter.inspect}" if @filter && !SeedDo.quiet
 
       filenames.each do |filename|
         run_file(filename)
@@ -30,7 +30,7 @@ module SeedFu
     private
 
       def run_file(filename)
-        puts "\n== Seed from #{filename}" unless SeedFu.quiet
+        puts "\n== Seed from #{filename}" unless SeedDo.quiet
 
         ActiveRecord::Base.transaction do
           open(filename) do |file|
