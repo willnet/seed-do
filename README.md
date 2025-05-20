@@ -1,5 +1,7 @@
 # Seed Do
 
+This project is a fork of [seed-fu](https://github.com/mbleigh/seed-fu).
+
 Seed Do is an attempt to once and for all solve the problem of inserting and maintaining seed data in a database. It uses a variety of techniques gathered from various places around the web and combines them to create what is hopefully the most robust seed data system around.
 
 ## Basic Example
@@ -140,14 +142,8 @@ require 'seed-do/capistrano3'
 before 'deploy:publishing', 'db:seed_do'
 ```
 
-## Bugs / Feature requests
+## Original Author
 
-Please report them on [GitHub Issues](https://github.com/willnet/seed-do/issues).
-
-## Contributors
-
-- [Michael Bleigh](http://www.mbleigh.com/) is the original author
-- [Jon Leighton](http://jonathanleighton.com/) is the current maintainer
-- Thanks to [Matthew Beale](https://github.com/mixonic) for his great work in adding the writer, making it faster and better.
+[Michael Bleigh](http://www.mbleigh.com/) is the original author
 
 Copyright © 2008-2010 Michael Bleigh, released under the MIT license
