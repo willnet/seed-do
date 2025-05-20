@@ -37,6 +37,39 @@ $ rake db:seed_do
 
 Just add `gem 'seed-do'` to your `Gemfile`
 
+## Migrating from seed-fu
+
+If you are migrating from seed-fu to seed-do, you'll need to make the following changes:
+
+1. Rename all occurrences of `SeedFu` to `SeedDo` in your code
+2. Update rake task references from `rake db:seed_fu` to `rake db:seed_do`
+
+For example:
+
+```ruby
+# Before
+SeedFu.seed
+rake db:seed_fu
+
+# After
+SeedDo.seed
+rake db:seed_do
+```
+
+Capistrano integration also needs to be updated:
+
+```ruby
+# Before
+require 'seed-fu/capistrano'
+# or for Capistrano3
+require 'seed-fu/capistrano3'
+
+# After
+require 'seed-do/capistrano'
+# or for Capistrano3
+require 'seed-do/capistrano3'
+```
+
 ## Constraints
 
 Constraints are used to identify seeds, so that they can be updated if necessary. For example:
