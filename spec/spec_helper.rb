@@ -6,8 +6,9 @@ require 'logger'
 SeedFu.quiet = true
 
 ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/../debug.log")
-
+ENV['RAILS_ENV'] ||= 'test'
 ENV["DB"] ||= 'sqlite3'
+
 puts "Using #{ENV["DB"]} to run the tests."
 require File.dirname(__FILE__) + "/connections/#{ENV["DB"]}.rb"
 
@@ -35,7 +36,7 @@ class SeededModel < ActiveRecord::Base
   attr_protected :first_name if self.respond_to?(:protected_attributes)
   attr_accessor :fail_to_save
 
-  before_save { false if fail_to_save }
+  before_save { throw(:abort) if fail_to_save }
 end
 
 class SeededModelNoPrimaryKey < ActiveRecord::Base

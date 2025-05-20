@@ -8,7 +8,7 @@ By default an sqlite3 database is used.
 
 To test others:
 
-  DB=mysql rspec spec/
+  DB=mysql2 rspec spec/
   DB=postgresql rspec spec/
 
 In each of these cases, you'll need to create a database named "spec_fu_test".
