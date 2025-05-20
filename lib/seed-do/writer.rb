@@ -67,7 +67,7 @@ module SeedDo
     def <<(seed)
       raise "You must add seeds inside a SeedDo::Writer#write block" unless @io
 
-      buffer = ''
+      buffer = +''
 
       if chunk_this_seed?
         buffer << seed_footer
