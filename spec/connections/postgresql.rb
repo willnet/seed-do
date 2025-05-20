@@ -1,7 +1,7 @@
 ActiveRecord::Base.configurations = {
   'test' => {
     :adapter  => "postgresql",
-    :database => "seed_fu_test",
+    :database => "seed_do_test",
     :username => "postgres",
     :host     => "127.0.0.1"
   }

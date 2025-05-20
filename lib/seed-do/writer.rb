@@ -1,6 +1,6 @@
 module SeedDo
   # {Writer} is used to programmatically generated seed files. For example, you might want to write
-  # a script which converts data in a CSV file to a valid Seed Fu seed file, which can then be
+  # a script which converts data in a CSV file to a valid Seed Do seed file, which can then be
   # imported.
   #
   # @example Basic usage

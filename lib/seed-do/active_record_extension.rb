@@ -29,7 +29,7 @@ module SeedDo
     #       { :x => 5, :y => 9,  :name => "Office" }
     #     )
     def seed(*args, &block)
-      SeedDo::Seeder.new(self, *parse_seed_fu_args(args, block)).seed
+      SeedDo::Seeder.new(self, *parse_seed_do_args(args, block)).seed
     end
 
     # Has the same syntax as {#seed}, but if a record already exists with the same values for
@@ -40,13 +40,13 @@ module SeedDo
     #   Person.seed(:id, :id => 1, :name => "Bob") # => Name changed
     #   Person.seed_once(:id, :id => 1, :name => "Harry") # => Name *not* changed
     def seed_once(*args, &block)
-      constraints, data = parse_seed_fu_args(args, block)
+      constraints, data = parse_seed_do_args(args, block)
       SeedDo::Seeder.new(self, constraints, data, :insert_only => true).seed
     end
 
     private
 
-      def parse_seed_fu_args(args, block)
+      def parse_seed_do_args(args, block)
         if block.nil?
           if args.last.is_a?(Array)
             # Last arg is an array of data, so assume the rest of the args are constraints

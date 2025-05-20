@@ -16,7 +16,7 @@ describe SeedDo::Runner do
     SeededModel.find(2).title.should == "Bar"
   end
 
-  it "should use the SpecFu.fixtures_path variable to determine where fixtures are" do
+  it "should use the SeedDo.fixtures_paths variable to determine where fixtures are" do
     SeedDo.fixture_paths = [File.dirname(__FILE__) + '/fixtures']
     SeedDo.seed
     SeededModel.count.should == 3
