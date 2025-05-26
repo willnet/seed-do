@@ -4,38 +4,13 @@ This project is a fork of [seed-fu](https://github.com/mbleigh/seed-fu).
 
 Seed Do is an attempt to once and for all solve the problem of inserting and maintaining seed data in a database. It uses a variety of techniques gathered from various places around the web and combines them to create what is hopefully the most robust seed data system around.
 
-## Basic Example
-
-### In `db/fixtures/users.rb`
-
-```ruby
-User.seed do |s|
-  s.id    = 1
-  s.login = "jon"
-  s.email = "jon@example.com"
-  s.name  = "Jon"
-end
-
-User.seed do |s|
-  s.id    = 2
-  s.login = "emily"
-  s.email = "emily@example.com"
-  s.name  = "Emily"
-end
-```
-
-### To load the data:
-
-```ruby
-$ rake db:seed_do
-== Seed from /path/to/app/db/fixtures/users.rb
- - User {:id=>1, :login=>"jon", :email=>"jon@example.com", :name=>"Jon"}
- - User {:id=>2, :login=>"emily", :email=>"emily@example.com", :name=>"Emily"}
-```
-
 ## Installation
 
 Just add `gem 'seed-do'` to your `Gemfile`
+
+## Documentation
+
+For detailed API documentation, please visit: https://rubydoc.info/github/willnet/seed-do
 
 ## Migrating from seed-fu
 
@@ -68,6 +43,36 @@ require 'seed-fu/capistrano3'
 require 'seed-do/capistrano'
 # or for Capistrano3
 require 'seed-do/capistrano3'
+```
+
+## Basic Example
+
+
+### In `db/fixtures/users.rb`
+
+```ruby
+User.seed do |s|
+  s.id    = 1
+  s.login = "jon"
+  s.email = "jon@example.com"
+  s.name  = "Jon"
+end
+
+User.seed do |s|
+  s.id    = 2
+  s.login = "emily"
+  s.email = "emily@example.com"
+  s.name  = "Emily"
+end
+```
+
+### To load the data:
+
+```ruby
+$ rake db:seed_do
+== Seed from /path/to/app/db/fixtures/users.rb
+ - User {:id=>1, :login=>"jon", :email=>"jon@example.com", :name=>"Jon"}
+ - User {:id=>2, :login=>"emily", :email=>"emily@example.com", :name=>"Emily"}
 ```
 
 ## Constraints
