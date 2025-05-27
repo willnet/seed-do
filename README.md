@@ -180,6 +180,26 @@ require 'seed-do/capistrano3'
 before 'deploy:publishing', 'db:seed_do'
 ```
 
+## Development
+
+### To run the specs
+
+```
+bundle install      # Install the dependencies
+bundle exec rspec   # Run the specs
+```
+
+By default an sqlite3 database is used.
+
+### To test others
+
+```
+DB=mysql2 bundle exec rspec
+DB=postgresql bundle exec rspec
+```
+
+The connection paramaters for each of these are specified in spec/connections/, which you can edit if necessary (for example to change the username/password).
+
 ## Original Author
 
 [Michael Bleigh](http://www.mbleigh.com/) is the original author
