@@ -33,7 +33,6 @@ end
 
 class SeededModel < ActiveRecord::Base
   validates_presence_of :title
-  attr_protected :first_name if self.respond_to?(:protected_attributes)
   attr_accessor :fail_to_save
 
   before_save { throw(:abort) if fail_to_save }
