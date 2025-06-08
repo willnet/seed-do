@@ -85,8 +85,7 @@ module SeedDo
           quoted_id       = @model_class.connection.quote_column_name(@model_class.primary_key)
           sequence = @model_class.sequence_name
 
-          # TODO postgresql_version was made public in Rails 5.0.0, remove #send when support for earlier versions are dropped
-          if @model_class.connection.send(:postgresql_version) >= 100000
+          if @model_class.connection.postgresql_version >= 100000
             sql =<<-EOS
               SELECT setval('#{sequence}', (SELECT GREATEST(MAX(#{quoted_id})+(SELECT seqincrement FROM pg_sequence WHERE seqrelid = '#{sequence}'::regclass), (SELECT seqmin FROM pg_sequence WHERE seqrelid = '#{sequence}'::regclass)) FROM #{@model_class.quoted_table_name}), false)
             EOS
