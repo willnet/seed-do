@@ -7,3 +7,5 @@ Gemfile.lock
 .yardoc
 doc
 gemfiles/*.gemfile.lock
+*.sqlite3
+spec/seeded_models.rb
