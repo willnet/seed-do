@@ -47,7 +47,15 @@ jobs:
           - { ruby-version: '3.4', gemfile: 'rails_8_0', database: 'sqlite3' }
           - { ruby-version: '3.4', gemfile: 'rails_8_0', database: 'mysql2' }
           - { ruby-version: '3.4', gemfile: 'rails_8_0', database: 'postgresql' }
-
+          - { ruby-version: '3.2', gemfile: 'rails_8_1', database: 'sqlite3' }
+          - { ruby-version: '3.2', gemfile: 'rails_8_1', database: 'mysql2' }
+          - { ruby-version: '3.2', gemfile: 'rails_8_1', database: 'postgresql' }
+          - { ruby-version: '3.3', gemfile: 'rails_8_1', database: 'sqlite3' }
+          - { ruby-version: '3.3', gemfile: 'rails_8_1', database: 'mysql2' }
+          - { ruby-version: '3.3', gemfile: 'rails_8_1', database: 'postgresql' }
+          - { ruby-version: '3.4', gemfile: 'rails_8_1', database: 'sqlite3' }
+          - { ruby-version: '3.4', gemfile: 'rails_8_1', database: 'mysql2' }
+          - { ruby-version: '3.4', gemfile: 'rails_8_1', database: 'postgresql' }
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
       DB: ${{ matrix.database }}
