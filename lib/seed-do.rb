@@ -10,17 +10,13 @@ module SeedDo
   autoload :Runner,                'seed-do/runner'
   autoload :Writer,                'seed-do/writer'
 
-  mattr_accessor :quiet
-
   # Set `SeedDo.quiet = true` to silence all output
-  @@quiet = false
-
-  mattr_accessor :fixture_paths
+  mattr_accessor :quiet, default: false
 
   # Set this to be an array of paths to directories containing your seed files. If used as a Rails
-  # plugin, SeedDo will set to to contain `Rails.root/db/fixtures` and
+  # plugin, SeedDo will set it to contain `Rails.root/db/fixtures` and
   # `Rails.root/db/fixtures/Rails.env`
-  @@fixture_paths = ['db/fixtures']
+  mattr_accessor :fixture_paths, default: ['db/fixtures']
 
   # Load seed data from files
   # @param [Array] fixture_paths The paths to look for seed files in
