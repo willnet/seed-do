@@ -12,7 +12,7 @@ module SeedDo
 
     def method_missing(method_name, *args, &block)
       if method_name.to_s =~ /^(.*)=$/ && args.length == 1 && block.nil?
-        @hash[$1] = args.first
+        @hash[::Regexp.last_match(1)] = args.first
       else
         super
       end

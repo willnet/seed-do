@@ -1,6 +1,6 @@
 require 'active_record'
 require 'active_support/core_ext/module/attribute_accessors'
-require 'seed-do/railtie' if defined?(Rails) && Rails.version >= "3"
+require 'seed-do/railtie' if defined?(Rails) && Rails.version >= '3'
 
 module SeedDo
   autoload :VERSION,               'seed-do/version'
