@@ -75,7 +75,7 @@ module SeedDo
     end
 
     def constraint_conditions(data)
-      Hash[@constraints.map { |c| [c, data[c.to_sym]] }]
+      @constraints.to_h { |c| [c, data[c.to_sym]] }
     end
 
     def update_id_sequence
