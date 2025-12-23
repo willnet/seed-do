@@ -14,7 +14,7 @@ module SeedDo
   mattr_accessor :quiet, default: false
 
   # Set this to be an array of paths to directories containing your seed files. If used as a Rails
-  # plugin, SeedDo will set to to contain `Rails.root/db/fixtures` and
+  # plugin, SeedDo will set it to contain `Rails.root/db/fixtures` and
   # `Rails.root/db/fixtures/Rails.env`
   mattr_accessor :fixture_paths, default: ['db/fixtures']
 
