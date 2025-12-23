@@ -1,1 +1,1 @@
-load File.expand_path('../../tasks/seed_do_capistrano3.rake', __FILE__)
+load File.expand_path('../tasks/seed_do_capistrano3.rake', __dir__)

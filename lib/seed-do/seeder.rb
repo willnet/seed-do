@@ -41,62 +41,61 @@ module SeedDo
 
     private
 
-      def validate_constraints!
-        unknown_columns = @constraints.map(&:to_s) - @model_class.column_names
-        unless unknown_columns.empty?
-          raise(ArgumentError,
+    def validate_constraints!
+      unknown_columns = @constraints.map(&:to_s) - @model_class.column_names
+      return if unknown_columns.empty?
+
+      raise(ArgumentError,
             "Your seed constraints contained unknown columns: #{column_list(unknown_columns)}. " +
             "Valid columns are: #{column_list(@model_class.column_names)}.")
-        end
-      end
+    end
 
-      def validate_data!
-        raise ArgumentError, "Seed data missing" if @data.empty?
-      end
+    def validate_data!
+      raise ArgumentError, 'Seed data missing' if @data.empty?
+    end
 
-      def column_list(columns)
-        '`' + columns.join("`, `") + '`'
-      end
+    def column_list(columns)
+      '`' + columns.join('`, `') + '`'
+    end
 
-      def seed_record(data)
-        record = find_or_initialize_record(data)
-        return if @options[:insert_only] && !record.new_record?
+    def seed_record(data)
+      record = find_or_initialize_record(data)
+      return if @options[:insert_only] && !record.new_record?
 
-        puts " - #{@model_class} #{data.inspect}" unless @options[:quiet]
+      puts " - #{@model_class} #{data.inspect}" unless @options[:quiet]
 
-        record.assign_attributes(data)
-        record.save(:validate => false) || raise(ActiveRecord::RecordNotSaved, 'Record not saved!')
-        record
-      end
+      record.assign_attributes(data)
+      record.save(validate: false) || raise(ActiveRecord::RecordNotSaved, 'Record not saved!')
+      record
+    end
 
-      def find_or_initialize_record(data)
-        @model_class.where(constraint_conditions(data)).take ||
+    def find_or_initialize_record(data)
+      @model_class.where(constraint_conditions(data)).take ||
         @model_class.new
-      end
+    end
 
-      def constraint_conditions(data)
-        Hash[@constraints.map { |c| [c, data[c.to_sym]] }]
-      end
+    def constraint_conditions(data)
+      Hash[@constraints.map { |c| [c, data[c.to_sym]] }]
+    end
 
-      def update_id_sequence
-        if @model_class.connection.adapter_name == "PostgreSQL" or @model_class.connection.adapter_name == "PostGIS"
-          return if @model_class.primary_key.nil? || @model_class.sequence_name.nil?
+    def update_id_sequence
+      return unless %w[PostgreSQL PostGIS].include?(@model_class.connection.adapter_name)
+      return if @model_class.primary_key.nil? || @model_class.sequence_name.nil?
 
-          quoted_id       = @model_class.connection.quote_column_name(@model_class.primary_key)
-          sequence = @model_class.sequence_name
+      quoted_id = @model_class.connection.quote_column_name(@model_class.primary_key)
+      sequence = @model_class.sequence_name
 
-          if @model_class.connection.postgresql_version >= 100000
-            sql =<<-EOS
+      if @model_class.connection.postgresql_version >= 100_000
+        sql = <<-EOS
               SELECT setval('#{sequence}', (SELECT GREATEST(MAX(#{quoted_id})+(SELECT seqincrement FROM pg_sequence WHERE seqrelid = '#{sequence}'::regclass), (SELECT seqmin FROM pg_sequence WHERE seqrelid = '#{sequence}'::regclass)) FROM #{@model_class.quoted_table_name}), false)
-            EOS
-          else
-            sql =<<-EOS
+        EOS
+      else
+        sql = <<-EOS
               SELECT setval('#{sequence}', (SELECT GREATEST(MAX(#{quoted_id})+(SELECT increment_by FROM #{sequence}), (SELECT min_value FROM #{sequence})) FROM #{@model_class.quoted_table_name}), false)
-            EOS
-          end
-
-          @model_class.connection.execute sql
-        end
+        EOS
       end
+
+      @model_class.connection.execute sql
+    end
   end
 end

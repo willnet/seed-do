@@ -1,7 +1,7 @@
 module SeedDo
   class Railtie < Rails::Railtie
     rake_tasks do
-      load "tasks/seed_do.rake"
+      load 'tasks/seed_do.rake'
     end
 
     initializer 'seed_do.set_fixture_paths' do

@@ -24,14 +24,10 @@ namespace :db do
       # to load files from RAILS_ROOT/features/fixtures
       rake db:seed_do FIXTURE_PATH=features/fixtures
   EOS
-  task :seed_do => :environment do
-    if ENV["FILTER"]
-      filter = /#{ENV["FILTER"].gsub(/,/, "|")}/
-    end
+  task seed_do: :environment do
+    filter = /#{ENV['FILTER'].tr(',', '|')}/ if ENV['FILTER']
 
-    if ENV["FIXTURE_PATH"]
-      fixture_paths = [ENV["FIXTURE_PATH"], ENV["FIXTURE_PATH"] + '/' + Rails.env]
-    end
+    fixture_paths = [ENV['FIXTURE_PATH'], ENV['FIXTURE_PATH'] + '/' + Rails.env] if ENV['FIXTURE_PATH']
 
     SeedDo.seed(fixture_paths, filter)
   end

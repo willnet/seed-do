@@ -29,45 +29,41 @@ module SeedDo
 
     private
 
-      def run_file(filename)
-        puts "\n== Seed from #{filename}" unless SeedDo.quiet
+    def run_file(filename)
+      puts "\n== Seed from #{filename}" unless SeedDo.quiet
 
-        ActiveRecord::Base.transaction do
-          open(filename) do |file|
-            chunked_ruby = +''
-            file.each_line do |line|
-              if line == "# BREAK EVAL\n"
-                eval(chunked_ruby)
-                chunked_ruby = +''
-              else
-                chunked_ruby << line
-              end
+      ActiveRecord::Base.transaction do
+        open(filename) do |file|
+          chunked_ruby = +''
+          file.each_line do |line|
+            if line == "# BREAK EVAL\n"
+              eval(chunked_ruby)
+              chunked_ruby = +''
+            else
+              chunked_ruby << line
             end
-            eval(chunked_ruby) unless chunked_ruby == ''
           end
+          eval(chunked_ruby) unless chunked_ruby == ''
         end
       end
+    end
 
-      def open(filename)
-        if filename[-3..-1] == '.gz'
-          Zlib::GzipReader.open(filename) do |file|
-            yield file
-          end
-        else
-          File.open(filename) do |file|
-            yield file
-          end
-        end
+    def open(filename, &)
+      if filename[-3..-1] == '.gz'
+        Zlib::GzipReader.open(filename, &)
+      else
+        File.open(filename, &)
       end
+    end
 
-      def filenames
-        filenames = []
-        @fixture_paths.each do |path|
-          filenames += (Dir[File.join(path, '*.rb')] + Dir[File.join(path, '*.rb.gz')]).sort
-        end
-        filenames.uniq!
-        filenames = filenames.find_all { |filename| filename =~ @filter } if @filter
-        filenames
+    def filenames
+      filenames = []
+      @fixture_paths.each do |path|
+        filenames += (Dir[File.join(path, '*.rb')] + Dir[File.join(path, '*.rb.gz')]).sort
       end
+      filenames.uniq!
+      filenames = filenames.find_all { |filename| filename =~ @filter } if @filter
+      filenames
+    end
   end
 end

@@ -41,25 +41,25 @@ module SeedDo
     #   Person.seed_once(:id, :id => 1, :name => "Harry") # => Name *not* changed
     def seed_once(*args, &block)
       constraints, data = parse_seed_do_args(args, block)
-      SeedDo::Seeder.new(self, constraints, data, :insert_only => true).seed
+      SeedDo::Seeder.new(self, constraints, data, insert_only: true).seed
     end
 
     private
 
-      def parse_seed_do_args(args, block)
-        if block.nil?
-          if args.last.is_a?(Array)
-            # Last arg is an array of data, so assume the rest of the args are constraints
-            data = args.pop
-            [args, data]
-          else
-            # Partition the args, assuming the first hash is the start of the data
-            args.partition { |arg| !arg.is_a?(Hash) }
-          end
+    def parse_seed_do_args(args, block)
+      if block.nil?
+        if args.last.is_a?(Array)
+          # Last arg is an array of data, so assume the rest of the args are constraints
+          data = args.pop
+          [args, data]
         else
-          # We have a block, so assume the args are all constraints
-          [args, [SeedDo::BlockHash.new(block).to_hash]]
+          # Partition the args, assuming the first hash is the start of the data
+          args.partition { |arg| !arg.is_a?(Hash) }
         end
+      else
+        # We have a block, so assume the args are all constraints
+        [args, [SeedDo::BlockHash.new(block).to_hash]]
       end
+    end
   end
 end

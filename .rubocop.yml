@@ -1,0 +1,10 @@
+inherit_from: .rubocop_todo.yml
+
+plugins:
+  - rubocop-performance
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2
+Performance:
+  Enabled: true
