@@ -20,6 +20,14 @@ ActiveRecord::Schema.define version: 0 do
     t.column :title, :string
   end
 
+  create_table :bulk_seeded_models, force: true do |t|
+    t.column :login, :string
+    t.column :first_name, :string
+    t.column :last_name, :string
+    t.column :title, :string
+    t.index :title, unique: true
+  end
+
   create_table :seeded_model_no_primary_keys, id: false, force: true do |t|
     t.column :id, :string
   end
@@ -38,6 +46,9 @@ class SeededModel < ActiveRecord::Base
   before_save { throw(:abort) if fail_to_save }
 end
 
+class BulkSeededModel < ActiveRecord::Base
+end
+
 class SeededModelNoPrimaryKey < ActiveRecord::Base
 end
 
@@ -47,5 +58,6 @@ end
 RSpec.configure do |config|
   config.before do
     SeededModel.delete_all
+    BulkSeededModel.delete_all
   end
 end
