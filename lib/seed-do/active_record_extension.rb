@@ -29,7 +29,13 @@ module SeedDo
     #       { :x => 5, :y => 9,  :name => "Office" }
     #     )
     def seed(*args, &block)
-      SeedDo::Seeder.new(self, *parse_seed_do_args(args, block)).seed
+      runner = SeedDo.current_runner
+      if runner&.bulk && runner.buffer
+        constraints, data = parse_seed_do_args(args, block)
+        runner.buffer[:seed] << { model: self, constraints: constraints, data: data }
+      else
+        SeedDo::Seeder.new(self, *parse_seed_do_args(args, block)).seed
+      end
     end
 
     # Has the same syntax as {#seed}, but if a record already exists with the same values for
@@ -41,7 +47,12 @@ module SeedDo
     #   Person.seed_once(:id, :id => 1, :name => "Harry") # => Name *not* changed
     def seed_once(*args, &block)
       constraints, data = parse_seed_do_args(args, block)
-      SeedDo::Seeder.new(self, constraints, data, insert_only: true).seed
+      runner = SeedDo.current_runner
+      if runner&.bulk && runner.buffer
+        runner.buffer[:seed_once] << { model: self, constraints: constraints, data: data }
+      else
+        SeedDo::Seeder.new(self, constraints, data, insert_only: true).seed
+      end
     end
 
     private

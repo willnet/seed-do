@@ -21,8 +21,17 @@ module SeedDo
   # Load seed data from files
   # @param [Array] fixture_paths The paths to look for seed files in
   # @param [Regexp] filter If given, only filenames matching this expression will be loaded
-  def self.seed(fixture_paths = SeedDo.fixture_paths, filter = nil)
-    Runner.new(fixture_paths, filter).run
+  # @param [Boolean] bulk If true, bulk insert/upsert will be used
+  def self.seed(fixture_paths = SeedDo.fixture_paths, filter = nil, bulk: false)
+    Runner.new(fixture_paths, filter, bulk: bulk).run
+  end
+
+  def self.current_runner
+    @current_runner
+  end
+
+  def self.current_runner=(runner)
+    @current_runner = runner
   end
 end
 
